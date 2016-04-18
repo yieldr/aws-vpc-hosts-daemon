@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/aws/aws-sdk-go/aws/ec2metadata"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -22,12 +23,14 @@ func NewEc2Metadata() (*EC2Metadata, error) {
 		return nil, errors.New("EC2 Metadata service is unavailable. Make sure the application is running within an EC2 Instance.")
 	}
 
+	mac, _ := service.GetMetadata("network/interfaces/macs/")
+
 	meta := &EC2Metadata{}
 	meta.Region, _ = service.Region()
-	meta.SubnetID, _ = service.GetMetadata("network/interfaces/macs/mac/subnet-id")
-	meta.SubnetCIDR, _ = service.GetMetadata("network/interfaces/macs/mac/subnet-ipv4-cidr-block")
-	meta.VpcID, _ = service.GetMetadata("network/interfaces/macs/mac/vpc-id")
-	meta.VpcCIDR, _ = service.GetMetadata("network/interfaces/macs/mac/vpc-ipv4-cidr-block")
+	meta.SubnetID, _ = service.GetMetadata(fmt.Sprintf("network/interfaces/macs/%s/subnet-id", mac))
+	meta.SubnetCIDR, _ = service.GetMetadata(fmt.Sprintf("network/interfaces/macs/%s/subnet-ipv4-cidr-block", mac))
+	meta.VpcID, _ = service.GetMetadata(fmt.Sprintf("network/interfaces/macs/%s/vpc-id", mac))
+	meta.VpcCIDR, _ = service.GetMetadata(fmt.Sprintf("network/interfaces/macs/%s/vpc-ipv4-cidr-block", mac))
 
 	return meta, nil
 }
