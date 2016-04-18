@@ -1,0 +1,10 @@
+[Unit]
+Description=Update hosts file with AWS Private DNS host names every minute
+
+[Timer]
+OnBootSec=0min
+OnCalendar=minutely
+Unit=aws-vpc-hosts-daemon.service
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,9 @@
+[Unit]
+Description=Update hosts file with AWS Private DNS host names.
+
+[Service]
+ExecStartPre=/usr/bin/docker pull yieldr/aws-vpc-hosts-daemon
+ExecStart=/usr/bin/docker run --rm -v /usr/share/ca-certificates:/etc/ssl/certs:ro yieldr/aws-vpc-hosts-daemon
+
+[Install]
+WantedBy=multi-user.target
