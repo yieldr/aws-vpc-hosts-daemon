@@ -1,0 +1,13 @@
+box: golang
+build:
+  steps:
+    - setup-go-workspace:
+        package-dir: github.com/yieldr/aws-vpc-hosts-daemon
+    - script:
+        name: go build
+        code: |
+          GO15VENDOREXPERIMENT=1 go build -o bin/aws-vpc-hosts-daemon -a -tags netgo -ldflags '-w'
+    - script:
+        name: go test
+        code: |
+          go test
