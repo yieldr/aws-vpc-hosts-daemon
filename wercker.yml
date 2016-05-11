@@ -11,3 +11,10 @@ build:
         name: go test
         code: |
           go test
+release:
+  steps:
+    - internal/docker-push:
+        username: $DOCKER_USERNAME
+        password: $DOCKER_PASSWORD
+        repository: yieldr/aws-vpc-hosts-daemon
+        tag: latest
