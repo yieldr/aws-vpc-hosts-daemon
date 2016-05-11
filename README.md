@@ -1,6 +1,8 @@
 # aws-vpc-hosts-daemon
 
-Update `/etc/hosts` file with private DNS host names.
+[![wercker status](https://app.wercker.com/status/dc44203d288114092e6cc1fa57f3cf68/s/master "wercker status")](https://app.wercker.com/project/bykey/dc44203d288114092e6cc1fa57f3cf68)
+
+Update `/etc/hosts` with private DNS host names.
 
 ## Usage
 
