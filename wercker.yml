@@ -6,15 +6,19 @@ build:
     - script:
         name: go build
         code: |
-          GO15VENDOREXPERIMENT=1 go build -o bin/aws-vpc-hosts-daemon -a -tags netgo -ldflags '-w'
+          GO15VENDOREXPERIMENT=1 go build -o aws-vpc-hosts-daemon -a -tags netgo -ldflags '-w'
     - script:
         name: go test
         code: |
           go test
+    - script:
+        name: copy binary
+        code: cp aws-vpc-hosts-daemon "$WERCKER_OUTPUT_DIR"
 release:
   steps:
-    - internal/docker-push:
+    - internal/docker-scratch-push:
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
         repository: yieldr/aws-vpc-hosts-daemon
+        cmd: /aws-vpc-hosts-daemon
         tag: latest
